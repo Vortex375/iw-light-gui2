@@ -15,6 +15,8 @@ export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input()
   zone: number
+  showDialog = false
+  saveMode = false
 
   @observable sliders = {
     h: 0,
@@ -97,6 +99,25 @@ export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
     let hsv = this.colorService.toHSV(r, g, b)
     this.sliders.h = hsv.h
     this.sliders.s = hsv.s
+  }
+
+  applyTemplate(tpl) {
+    this.setColor(tpl.r, tpl.g, tpl.b)
+    this.updateColor()
+  }
+
+  openSelectDialog() {
+    this.saveMode = false
+    this.showDialog = true
+  }
+
+  openSaveDialog() {
+    this.saveMode = true
+    this.showDialog = true
+  }
+
+  dialogClosed() {
+    this.showDialog = false
   }
 
   @computed get currentColor() {

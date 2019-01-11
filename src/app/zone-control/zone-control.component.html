@@ -29,8 +29,9 @@
       </div>
     </div>
     <div class="card-action">
-        <a class="waves-effect waves-orange btn-flat" href="#">Apply Template</a>
-        <a class="waves-effect waves-orange btn-flat" href="#">Save As</a>
+        <a class="waves-effect waves-orange btn-flat" (click)="openSelectDialog()">Load Template</a>
+        <a class="waves-effect waves-orange btn-flat" (click)="openSaveDialog()">Save As</a>
       </div>
   </div>
 </div>
+<app-template-dialog *ngIf="showDialog" [show]="showDialog" [saveMode]="saveMode" [currentColor]="sliders" (selectedTemplate)="applyTemplate($event)" (closed)="dialogClosed()"></app-template-dialog>
