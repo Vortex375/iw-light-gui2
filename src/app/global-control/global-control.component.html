@@ -1,0 +1,12 @@
+<div class="col s12">
+  <div class="card">
+    <div class="card-content">
+        <div class="input-field">
+            <i class="material-icons prefix">brightness_5</i>
+            <p class="range-field range-with-prefix">
+              <input class="color-slider" type="range" (ngModelChange)="setBrightness($event)" [(ngModel)]="brightness" min="0" max="255"/>
+            </p>
+          </div>
+    </div>
+  </div>
+</div>  
