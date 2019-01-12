@@ -147,4 +147,7 @@ export class TemplateDialogComponent implements OnInit, AfterViewInit, OnChanges
     return _.filter(this.templates || [], tpl => ! (tpl.system && this.saveMode))
   }
 
+  previewColor(tpl) {
+    return `rgb(${tpl.r},${tpl.g},${tpl.b})`
+  }
 }

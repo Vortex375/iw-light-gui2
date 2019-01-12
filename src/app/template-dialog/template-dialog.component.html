@@ -6,9 +6,10 @@
       <label class="active" for="newTemplateName">New Template</label>
     </div>
     <ul class="collection">
-      <li class="collection-item" *ngFor="let tpl of visibleTemplates, index as index">
-          <a href="#!" (click)="templateAction(index)">{{ tpl.name }}</a>
-          <a v-if="! tpl.system" href="#!" (click)="deleteTemplate(index)" class="secondary-content"><i class="material-icons">delete</i></a>
+      <li class="collection-item waves-effect waves-orange" *ngFor="let tpl of visibleTemplates, index as index" (click)="templateAction(index)">
+          <div class="color-preview" [ngStyle]="{'background-color': previewColor(tpl)}"></div>
+          <span>{{ tpl.name }}</span>
+          <a *ngIf="! tpl.system" (click)="deleteTemplate(index)" class="secondary-content"><i class="material-icons">delete</i></a>
       </li>
     </ul>
   </div>
@@ -19,7 +20,7 @@
       <p>{{confirmMessage}}</p>
     </div>
     <div class="modal-footer">
-      <a href="#!" (click)="confirmComplete(false)" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-      <a href="#!" (click)="confirmComplete(true)" class="modal-action modal-close waves-effect waves-green btn-flat ">Confirm</a>
+      <a (click)="confirmComplete(false)" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+      <a (click)="confirmComplete(true)" class="modal-action modal-close waves-effect waves-green btn-flat ">Confirm</a>
     </div>
   </div>
