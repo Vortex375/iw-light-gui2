@@ -15,8 +15,7 @@ export class DeepstreamService {
 
   constructor() { 
     const hostname = window.location.hostname
-    // this.ds = deepstream(hostname + ":6020", DEEPSTREAM_CONFIG)
-    this.ds = deepstream("192.168.0.22:6020", DEEPSTREAM_CONFIG)
+    this.ds = deepstream(hostname + ":6020", DEEPSTREAM_CONFIG)
     this.ds.login()
   }
 
