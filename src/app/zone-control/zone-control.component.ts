@@ -6,6 +6,9 @@ import { ColorService } from '../color.service';
 import * as _ from 'lodash';
 import { DeepstreamService } from '../deepstream.service';
 
+import { Client } from '@deepstream/client';
+import { Record } from '@deepstream/client/dist/record/record';
+
 @Component({
   selector: 'app-zone-control',
   templateUrl: './zone-control.component.html',
@@ -25,9 +28,9 @@ export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
     w: 0
   };
 
-  private record: deepstreamIO.Record;
+  private record: Record;
 
-  private readonly ds: deepstreamIO.Client;
+  private readonly ds: Client;
 
   constructor(
       private colorService: ColorService,
@@ -85,7 +88,7 @@ export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
       const rgb = this.colorService.toRGB(this.sliders.h, this.sliders.s, 100);
       const brightness = this.sliders.v / 255;
 
-      this.record.set('brightness', brightness);
+      this.record.set('brightness', brightness as any);
       this.record.set('value', {
         r: rgb.r,
         g: rgb.g,

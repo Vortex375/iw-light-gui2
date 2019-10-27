@@ -5,6 +5,8 @@ import { ColorService } from '../color.service';
 import { DeepstreamService } from '../deepstream.service';
 
 import * as _ from 'lodash';
+import { Record } from '@deepstream/client/dist/record/record';
+import { Client } from '@deepstream/client';
 
 @Component({
   selector: 'app-global-control',
@@ -15,9 +17,9 @@ export class GlobalControlComponent implements OnInit, AfterViewInit {
 
   brightness: number;
 
-  private record: deepstreamIO.Record;
+  private record: Record;
 
-  private readonly ds: deepstreamIO.Client;
+  private readonly ds: Client;
 
   constructor(
       private colorService: ColorService,
@@ -48,6 +50,6 @@ export class GlobalControlComponent implements OnInit, AfterViewInit {
     }
     const brightness = value / 255;
 
-    this.record.set('brightness', brightness);
+    this.record.set('brightness', brightness as any);
   }
 }
