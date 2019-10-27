@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 
 import { observable, computed } from 'mobx-angular';
 import { ColorService } from '../color.service';
 
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 import { DeepstreamService } from '../deepstream.service';
 
 @Component({
@@ -14,64 +14,64 @@ import { DeepstreamService } from '../deepstream.service';
 export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input()
-  zone: number
-  showDialog = false
-  saveMode = false
+  zone: number;
+  showDialog = false;
+  saveMode = false;
 
   @observable sliders = {
     h: 0,
     s: 0,
     v: 0,
     w: 0
-  }
-  
-  private record: deepstreamIO.Record
-  
-  private readonly ds: deepstreamIO.Client
+  };
+
+  private record: deepstreamIO.Record;
+
+  private readonly ds: deepstreamIO.Client;
 
   constructor(
-      private colorService: ColorService, 
+      private colorService: ColorService,
       private dsService: DeepstreamService,
       private element: ElementRef) {
-    this.ds = dsService.getDeepstream()
+    this.ds = dsService.getDeepstream();
   }
 
   ngOnInit() {
-    this.subscribe(this.zone)
+    this.subscribe(this.zone);
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
     if (_.has(changes, 'zone')) {
-      this.subscribe(changes['zone'].currentValue)
+      this.subscribe(changes['zone'].currentValue);
     }
   }
 
   ngAfterViewInit() {
-    M.Range.init(this.element.nativeElement.querySelectorAll('.color-slider'))
+    M.Range.init(this.element.nativeElement.querySelectorAll('.color-slider'));
   }
 
   subscribe(zone: number) {
     if (this.record) {
-      this.record.discard()
-      this.record = undefined
+      this.record.discard();
+      this.record = undefined;
     }
 
-    this.record = this.ds.record.getRecord("light-control/zone/" + this.zone)
+    this.record = this.ds.record.getRecord('light-control/zone/' + this.zone);
 
     this.record.subscribe(null, (data) => {
 
-      let brightness = data.brightness
+      let brightness = data.brightness;
       if ( ! _.isNumber(brightness)) {
-        brightness = 0
+        brightness = 0;
       }
-      this.sliders.v = 255 * brightness
-      let color = data.value
-      this.setColor(color.r, color.g, color.b)
-      this.sliders.w = color.w
+      this.sliders.v = 255 * brightness;
+      const color = data.value;
+      this.setColor(color.r, color.g, color.b);
+      this.sliders.w = color.w;
 
-    }, true)
+    }, true);
 
-    this.record.on("error", (err) => console.error(err))
+    this.record.on('error', (err) => console.error(err));
   }
 
   updateColor() {
@@ -79,66 +79,66 @@ export class ZoneControlComponent implements OnInit, OnChanges, AfterViewInit {
      * execution of the event handler */
     setTimeout(() => {
       if ( ! this.record || ! this.record.isReady) {
-        return
+        return;
       }
 
-      let rgb = this.colorService.toRGB(this.sliders.h, this.sliders.s, 100)
-      let brightness = this.sliders.v / 255
+      const rgb = this.colorService.toRGB(this.sliders.h, this.sliders.s, 100);
+      const brightness = this.sliders.v / 255;
 
-      this.record.set("brightness", brightness)
-      this.record.set("value", {
+      this.record.set('brightness', brightness);
+      this.record.set('value', {
         r: rgb.r,
         g: rgb.g,
         b: rgb.b,
         w: this.sliders.w
-      })
-    }, 1)
+      });
+    }, 1);
   }
 
   setColor(r: number, g: number, b: number) {
-    let hsv = this.colorService.toHSV(r, g, b)
-    this.sliders.h = hsv.h
-    this.sliders.s = hsv.s
+    const hsv = this.colorService.toHSV(r, g, b);
+    this.sliders.h = hsv.h;
+    this.sliders.s = hsv.s;
   }
 
   applyTemplate(tpl) {
-    this.setColor(tpl.r, tpl.g, tpl.b)
-    this.updateColor()
+    this.setColor(tpl.r, tpl.g, tpl.b);
+    this.updateColor();
   }
 
   openSelectDialog() {
-    this.saveMode = false
-    this.showDialog = true
+    this.saveMode = false;
+    this.showDialog = true;
   }
 
   openSaveDialog() {
-    this.saveMode = true
-    this.showDialog = true
+    this.saveMode = true;
+    this.showDialog = true;
   }
 
   dialogClosed() {
-    this.showDialog = false
+    this.showDialog = false;
   }
 
   @computed get currentColor() {
-    return this.colorService.toRGB(this.sliders.h, this.sliders.s, this.sliders.v / 255)
+    return this.colorService.toRGB(this.sliders.h, this.sliders.s, this.sliders.v / 255);
   }
 
   @computed get previewColor() {
-    return "rgb(" + this.currentColor.r + "," + this.currentColor.g + "," + this.currentColor.b + ")"
+    return 'rgb(' + this.currentColor.r + ',' + this.currentColor.g + ',' + this.currentColor.b + ')'
   }
 
   @computed get brightnessGradient() {
-    let rgb = this.colorService.toRGB(this.sliders.h, this.sliders.s, 100)
-    return "linear-gradient(to right, black, rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + "))"
+    const rgb = this.colorService.toRGB(this.sliders.h, this.sliders.s, 100);
+    return 'linear-gradient(to right, black, rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + '))'
   }
 
   get hueGradient() {
-    return "linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)"
+    return 'linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)'
   }
 
   @computed get saturationGradient() {
-    let rgb = this.colorService.toRGB(this.sliders.h, 100, 100)
-    return "linear-gradient(to right, white, rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + "))"
+    const rgb = this.colorService.toRGB(this.sliders.h, 100, 100);
+    return 'linear-gradient(to right, white, rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + '))'
   }
 }

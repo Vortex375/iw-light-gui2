@@ -4,7 +4,7 @@ import { observable, computed } from 'mobx-angular';
 import { ColorService } from '../color.service';
 import { DeepstreamService } from '../deepstream.service';
 
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-global-control',
@@ -13,41 +13,41 @@ import * as _ from 'lodash'
 })
 export class GlobalControlComponent implements OnInit, AfterViewInit {
 
-  brightness: number
+  brightness: number;
 
-  private record: deepstreamIO.Record
+  private record: deepstreamIO.Record;
 
-  private readonly ds: deepstreamIO.Client
+  private readonly ds: deepstreamIO.Client;
 
   constructor(
-      private colorService: ColorService, 
+      private colorService: ColorService,
       private dsService: DeepstreamService,
       private element: ElementRef) {
-    this.ds = dsService.getDeepstream()
+    this.ds = dsService.getDeepstream();
    }
 
   ngOnInit() {
-    this.record = this.ds.record.getRecord("light-control/global")
+    this.record = this.ds.record.getRecord('light-control/global');
     this.record.subscribe(null, (data) => {
 
-      let brightness = data.brightness
+      let brightness = data.brightness;
       if ( ! _.isNumber(brightness)) {
-        brightness = 0
+        brightness = 0;
       }
-      this.brightness = 255 * brightness
-    }, true)
+      this.brightness = 255 * brightness;
+    }, true);
   }
 
   ngAfterViewInit() {
-    M.Range.init(this.element.nativeElement.querySelectorAll('.color-slider'))
+    M.Range.init(this.element.nativeElement.querySelectorAll('.color-slider'));
   }
 
   setBrightness(value) {
     if ( ! this.record || ! this.record.isReady) {
-      return
+      return;
     }
-    let brightness = value / 255
+    const brightness = value / 255;
 
-    this.record.set("brightness", brightness)
+    this.record.set('brightness', brightness);
   }
 }

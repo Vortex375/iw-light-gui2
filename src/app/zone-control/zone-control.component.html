@@ -5,7 +5,7 @@
       <div class="input-field">
         <i class="material-icons prefix">brightness_5</i>
         <p class="range-field range-with-prefix">
-          <input class="color-slider" type="range" (ngModelChange)="updateColor($event)" [(ngModel)]="sliders.v" min="0" max="255" [ngStyle]="{background: brightnessGradient}"/>
+          <input class="color-slider" type="range" (ngModelChange)="updateColor()" [(ngModel)]="sliders.v" min="0" max="255" [ngStyle]="{background: brightnessGradient}"/>
         </p>
       </div>
       <div class="input-field">

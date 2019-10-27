@@ -1,0 +1,21 @@
+{
+"Candle": {"r": 255, "g": 147, "b": 41},
+"Tungsten40W": {"r": 255, "g": 197, "b": 143},
+"Tungsten100W": {"r": 255, "g": 214, "b": 170},
+"Halogen": {"r": 255, "g": 241, "b": 224},
+"CarbonArc": {"r": 255, "g": 250, "b": 244},
+"HighNoonSun": {"r": 255, "g": 255, "b": 251},
+"DirectSunlight": {"r": 255, "g": 255, "b": 255},
+"OvercastSky": {"r": 201, "g": 226, "b": 255},
+"ClearBlueSky": {"r": 64, "g": 156, "b": 255},
+"WarmFluorescent": {"r": 255, "g": 244, "b": 229},
+"StandardFluorescent": {"r": 244, "g": 255, "b": 250},
+"CoolWhiteFluorescent": {"r": 212, "g": 235, "b": 255},
+"FullSpectrumFluorescent": {"r": 255, "g": 244, "b": 242},
+"GrowLightFluorescent": {"r": 255, "g": 239, "b": 247},
+"BlackLightFluorescent": {"r": 167, "g": 0, "b": 255},
+"MercuryVapor": {"r": 216, "g": 247, "b": 255},
+"SodiumVapor": {"r": 255, "g": 209, "b": 178},
+"MetalHalide": {"r": 242, "g": 252, "b": 255},
+"HighPressureSodium": {"r": 255, "g": 183, "b": 76}
+}
